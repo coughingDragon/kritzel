@@ -1,0 +1,14 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+build/
+
+# IntelliJ Idea
+.idea
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/**
+app/
+/bin/
