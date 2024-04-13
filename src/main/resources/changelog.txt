@@ -1,0 +1,16 @@
+Changelog - Kritzel Version 1.0-SNAPSHOT 12.04.24
+
+Hinzugefügt:
+- Notizblock: Auswahl der Schriftgröße & Markieren von Textstellen (ComboBox, Button)
+- Kritzelblock: Umschaltknöpfe zwischen Stift und Radiergummi & Auswahl der Linienstärke (ToggleButton, ComboBox)
+- To-do-Liste: Möglichkeit innerhalb des Textfeldes die Entertaste zu drücken, um eine Checkbox zu erstellen
+- Abruf der Änderungsliste (Changelog)
+
+Entfernt:
+- Versteckter Cookie-Clicker look-a-like vorläufig entfernt
+
+Verändert:
+- Code neu umstrukturiert
+- Öffnen und Speichern von .txt und .docx Dateien über Betriebssystem Datei Explorer Dialog möglich
+- Fenster und Vollbildmodus Unterstüzung für Full-HD Monitore 1920x1080 - px
+- Menü Items werden nur noch im richtigen Kontext angezeigt

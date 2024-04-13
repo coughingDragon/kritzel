@@ -1,11 +1,12 @@
 package com.github.coughingDragon.kritzel;
 
+import java.util.Objects;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-
 
 public class Main extends Application {
 	
@@ -15,12 +16,21 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Scene scene = new Scene(createContents());
+		Model model = new Model();
+		Region sceneRoot = new ScreenBuilder(model, 
+				new Tasks.OpenFile(primaryStage),
+				new Tasks.SaveFile(primaryStage, model)
+		).build();
+		Scene scene = new Scene(sceneRoot, 1800, 1000);
 		primaryStage.setScene(scene);
+		scene.getStylesheets().add("src/main/resources/css/styles.css");
+		primaryStage.setTitle("Kritzel");
+		setIcons(primaryStage);
 		primaryStage.show();
 	}
 	
-	private Region createContents() {
-		return new Label("These are the Bare-Bones of Kritzel!");
+	private void setIcons(Stage stage) {
+		stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/pencil.png"))));
 	}
+
 }
