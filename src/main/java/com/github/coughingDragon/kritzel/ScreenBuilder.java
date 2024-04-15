@@ -1,8 +1,5 @@
 package com.github.coughingDragon.kritzel;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.Callable;
 
 import javafx.beans.property.StringProperty;
@@ -110,12 +107,9 @@ public class ScreenBuilder implements Builder<Region> {
 	
 	private MenuItem menuItemNews() {
 		MenuItem results = Widgets.createMenuItem("Änderungen");
-		results.setOnAction(evt -> {try {
-			Desktop.getDesktop().open(new File("src/main/resources/changelog.txt"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}});
+		results.setOnAction(evt -> {
+			new Main().getHostServices().showDocument("https://github.com/coughingDragon/kritzel/blob/master/src/main/resources/changelog.txt");
+		});
 		return results;
 	}
 	
@@ -153,7 +147,7 @@ public class ScreenBuilder implements Builder<Region> {
 		VBox results = new VBox();
 		results.getChildren().add(createEditorToolBar());
 		results.getChildren().add(createTextArea(model.fileContentProperty()));
-		VBox.setVgrow(results.getChildren().getLast(), Priority.ALWAYS);
+		VBox.setVgrow(results.getChildren().get(1), Priority.ALWAYS);
 		return results;
 	}
 	
@@ -189,7 +183,7 @@ public class ScreenBuilder implements Builder<Region> {
 		VBox results = new VBox();
 		results.getChildren().add(createDrawingToolBar());
 		results.getChildren().add(createCanvasContainer());
-		VBox.setVgrow(results.getChildren().getLast(), Priority.ALWAYS);
+		VBox.setVgrow(results.getChildren().get(1), Priority.ALWAYS);
 		return results;
 	}
 	

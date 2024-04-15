@@ -3,11 +3,11 @@ plugins {
     id 'application' 
 	id 'org.openjfx.javafxplugin' version '0.0.13'
 	id 'org.beryx.jlink' version '2.26.0'
-    
+	id 'eclipse'
 }
 
 group 'com.github.coughingDragon'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral() 
@@ -21,14 +21,15 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 	
+	runtimeOnly 'org.apache.logging.log4j:log4j-api:2.23.1'
 	implementation 'org.apache.poi:poi-ooxml:5.2.5'
 }
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 	toolchain {
-		languageVersion.set(JavaLanguageVersion.of(21))
+		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
 
@@ -61,20 +62,15 @@ jlink {
         jvmArgs = ['-Dlog4j.configurationFile=./log4j2.xml']
     }
     
-	mergedModule {
-		requires("java.logging")
-	}
-	
-	targetPlatform("win") {
-		jdkHome = jdkDownload("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jdk_x64_windows_hotspot_21.0.2_13.zip")
-        //JavaFX jmods: https://download2.gluonhq.com/openjfx/21.0.2/openjfx-21.0.2_windows-x64_bin-jmods.zip
-		addExtraModulePath("$buildDir/jdks/win/jdk-17.0.8+7/jmods")
+	targetPlatform('win') {
+		jdkHome = jdkDownload("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.10%2B7/OpenJDK17U-jdk_x64_windows_hotspot_17.0.10_7.zip")
+		addExtraModulePath("$buildDir/jdks/win/jdk-17.0.10+7/jmods")
     }
-    
+ 
     jpackage {
 		skipInstaller = false
 		if (org.gradle.internal.os.OperatingSystem.current().windows) {
-			jpackageHome = "$buildDir/jdks/win/jdk-21.0.2+13"
+			jpackageHome = "$buildDir/jdks/win/jdk-17.0.10+7"
         	targetPlatformName = "win"
         	installerType = "msi"
         	icon = "src/main/resources/icons/favicon.ico"

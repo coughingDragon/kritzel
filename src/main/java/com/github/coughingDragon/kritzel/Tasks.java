@@ -19,7 +19,7 @@ public class Tasks {
 		public String call() throws Exception {
 			FileChooser fc = Helper.createFileChooser();
 			return Helper.openFile(fc.showOpenDialog(stage), 
-					fc.getSelectedExtensionFilter().getExtensions().getFirst());
+					fc.getSelectedExtensionFilter().getExtensions().get(0));
 		}
 		
 	}
@@ -38,7 +38,7 @@ public class Tasks {
 		public void run() {
 			FileChooser fc = Helper.createFileChooser();
 			Helper.saveTextToFile(model.getFileContent(), fc.showSaveDialog(stage), 
-					fc.getSelectedExtensionFilter().getExtensions().getFirst());
+					fc.getSelectedExtensionFilter().getExtensions().get(0));
 		}
 		
 	}

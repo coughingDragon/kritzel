@@ -23,7 +23,7 @@ public class Main extends Application {
 		).build();
 		Scene scene = new Scene(sceneRoot, 1800, 1000);
 		primaryStage.setScene(scene);
-		scene.getStylesheets().add("src/main/resources/css/styles.css");
+		scene.getStylesheets().add(Main.class.getResource("/css/styles.css").toExternalForm());
 		primaryStage.setTitle("Kritzel");
 		setIcons(primaryStage);
 		primaryStage.show();
@@ -32,5 +32,5 @@ public class Main extends Application {
 	private void setIcons(Stage stage) {
 		stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/pencil.png"))));
 	}
-
+	
 }
