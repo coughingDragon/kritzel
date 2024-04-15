@@ -31,10 +31,10 @@ jobs:
     - name: Upload EXE as an artifact
       uses: actions/upload-artifact@v2
       with:
-        name: meditation-jdk${{ matrix.java }}-${{ matrix.os }}-exe
-        path: app/build/jpackage/*.exe
+        name: kritzel-jdk${{ matrix.java }}-${{ matrix.os }}-exe
+        path: build/jpackage/kritzel/*.exe
     - name: Upload MSI as an artifact
       uses: actions/upload-artifact@v2
       with:
-        name: meditation-jdk${{ matrix.java }}-${{ matrix.os }}-msi
-        path: app/build/jpackage/*.msi
+        name: kritzel-jdk${{ matrix.java }}-${{ matrix.os }}-msi
+        path: build/jpackage/*.msi
