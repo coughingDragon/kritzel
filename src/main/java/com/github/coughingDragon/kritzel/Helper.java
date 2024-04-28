@@ -2,15 +2,16 @@ package com.github.coughingDragon.kritzel;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -18,26 +19,43 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import javafx.stage.FileChooser;
 
 public class Helper {
-
-	public static FileChooser createFileChooser() {
+	
+	private static final String PREFIX = "*.";
+	private static final String TXT_EXTENSION = "txt";
+	private static final String DOCX_EXTENSION = "docx";
+	
+	private static final FileChooser chooser = getFileChooser();
+	
+	
+	private Helper() {}
+	
+	private static FileChooser getFileChooser() {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().addAll(
-			     new FileChooser.ExtensionFilter("Text Dateien", "*.txt"),
-			     new FileChooser.ExtensionFilter("Word Dateien", "*.docx"));
+			     new FileChooser.ExtensionFilter("Text Dateien", PREFIX + TXT_EXTENSION),
+			     new FileChooser.ExtensionFilter("Word Dateien", PREFIX + DOCX_EXTENSION));
 		return fc;
 	}
 	
-	public static String openFile(File file, String extension) {
+	private static String getFileExtension(String fileName) {
+		return FilenameUtils.getExtension(fileName);
+	}
+	
+	static String openFile() {
+		File file = chooser.showOpenDialog(null);
 		String data = "";
-		if (file == null) return data;
+		if (file == null) return null;
 		try {
 			FileInputStream fileStream = new FileInputStream(file);
-			switch(extension) {
-				case "*.txt" -> data = readTextFile(fileStream);
-				case "*.docx" -> data = readDocXFile(fileStream);
-				default -> data = "";
+			switch(getFileExtension(file.getName())) {
+				case TXT_EXTENSION -> data = readTextFile(fileStream);
+				case DOCX_EXTENSION -> data = readDocXFile(fileStream);
+				default -> data = null;
 			}
-		} catch (FileNotFoundException e) {
+			chooser.setInitialFileName(file.getName());
+			chooser.setInitialDirectory(file.getParentFile());
+			fileStream.close();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -45,10 +63,10 @@ public class Helper {
 		return data;
 	}
 	
-	public static String readTextFile(FileInputStream fis) {
+	private static String readTextFile(FileInputStream fis) {
 		StringBuilder builder = new StringBuilder();
 		try {
-			Reader r = new InputStreamReader(fis, "UTF-8");
+			Reader r = new InputStreamReader(fis, StandardCharsets.UTF_8);
 			int ch = r.read();
 			while (ch >= 0) {
 				builder.append((char)ch);
@@ -62,7 +80,7 @@ public class Helper {
 		return builder.toString();
 	}
 	
-	public static String readDocXFile(FileInputStream fis) {
+	private static String readDocXFile(FileInputStream fis) {
 		StringBuilder builder = new StringBuilder();
 		try {
 			XWPFDocument document = new XWPFDocument(fis);
@@ -80,24 +98,27 @@ public class Helper {
 	}
 	
 	
-	public static void saveTextToFile(String text, File file, String extension) {
+	public static void saveTextToFile(String text) {
+		File file = chooser.showSaveDialog(null);
 		if (file == null) return;
 		try {
 			FileOutputStream fileStream = new FileOutputStream(file);
-			switch(extension) {
-				case "*.txt" -> writeTextFile(fileStream, text);
-				case "*.docx" -> writeDocXFile(fileStream, text);
+			switch(getFileExtension(file.getName())) {
+				case TXT_EXTENSION -> writeTextFile(fileStream, text);
+				case DOCX_EXTENSION -> writeDocXFile(fileStream, text);
+				default -> {}
 			}
-		} catch (FileNotFoundException e) {
+			fileStream.close();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}
 	
-	public static void writeTextFile(FileOutputStream fos, String text) {
+	private static void writeTextFile(FileOutputStream fos, String text) {
 		try {
-			Writer w = new OutputStreamWriter(fos, "UTF-8");
-			char ch[] = text.toCharArray();
+			Writer w = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+			char[] ch = text.toCharArray();
 			
 			for (int i = 0; i < text.length(); i++) {
 				w.write(ch[i]);
@@ -109,7 +130,7 @@ public class Helper {
 		}
 	}
 	
-	public static void writeDocXFile(FileOutputStream fos, String text) {
+	private static void writeDocXFile(FileOutputStream fos, String text) {
 		try {
 			XWPFDocument document = new XWPFDocument();
 			String[] data = text.split("\n");

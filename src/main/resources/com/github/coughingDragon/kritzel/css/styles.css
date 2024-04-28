@@ -1,0 +1,36 @@
+@font-face {
+	src: url('../fonts/LibreBaskerville-Regular.ttf');
+}
+
+.root {
+	-fx-font-family: 'Libre Baskerville';
+	-fx-font-size: 14;
+	-fx-cursor: hand;
+}
+
+.tool-bar {
+	-fx-padding: 10px;
+}
+
+.check-box {
+	-fx-padding: 10px;
+	-fx-alignment: center;
+}
+
+.canvas {
+	-fx-cursor: crosshair;
+}
+
+.canvas-pane {
+	-fx-alignment: center;
+	-fx-background-color: white;
+	-fx-border-color: black;
+	-fx-border-insets: 20px 20px 0px 20px;
+}
+
+.bottom-bar {
+	-fx-border-color: #cccccc;
+	-fx-background-color: #cccccc;
+	-fx-border-insets: 0px 18px 0px 20px;
+	-fx-alignment: top-right;
+}

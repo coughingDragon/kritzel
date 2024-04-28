@@ -23,6 +23,9 @@ dependencies {
 	
 	runtimeOnly 'org.apache.logging.log4j:log4j-api:2.23.1'
 	implementation 'org.apache.poi:poi-ooxml:5.2.5'
+	implementation 'com.gluonhq:rich-text-area:1.1.1'
+	implementation 'org.kordamp.ikonli:ikonli-javafx:12.3.1'
+	implementation 'org.kordamp.ikonli:ikonli-fontawesome-pack:12.3.1'
 }
 
 java {
@@ -66,14 +69,15 @@ jlink {
 		jdkHome = jdkDownload("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.10%2B7/OpenJDK17U-jdk_x64_windows_hotspot_17.0.10_7.zip")
 		addExtraModulePath("$buildDir/jdks/win/jdk-17.0.10+7/jmods")
     }
- 
+    
     jpackage {
 		skipInstaller = false
+		def dest = 'com/github/coughingDragon/kritzel'
 		if (org.gradle.internal.os.OperatingSystem.current().windows) {
 			jpackageHome = "$buildDir/jdks/win/jdk-17.0.10+7"
         	targetPlatformName = "win"
         	installerType = "msi"
-        	icon = "src/main/resources/icons/favicon.ico"
+        	icon = "src/main/resources/$dest/icons/favicon.ico"
         	installerOptions = ["--win-menu", "--win-shortcut"]
     	}
 	}   
