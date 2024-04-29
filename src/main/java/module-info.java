@@ -7,7 +7,7 @@ module com.github.coughingDragon.kritzel {
 	requires com.gluonhq.richtextarea;
 	requires org.apache.commons.io;
 	requires org.kordamp.ikonli.javafx;
+	requires org.apache.logging.log4j;
 	
 	exports com.github.coughingDragon.kritzel;
-	exports com.github.coughingDragon.kritzel.view;
 }
